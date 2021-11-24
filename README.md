@@ -30,3 +30,5 @@
    `wget git.io/JMfrV && sh JMfrV`
 11. Перезагружаемся
    `sudo reboot`
+
+Многие данные взяты со статьи https://www.nishantnadkarni.tech/posts/arch_installation/
