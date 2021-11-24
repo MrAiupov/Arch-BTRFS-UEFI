@@ -17,7 +17,7 @@
 6. Отредактируем файл mkinitcpio
    `nano /etc/mkinitcpio.conf`
    добавим модуль btrfs в строке `MODULES=(btrfs)`
-   сохраним и выйдем `Ctrl+O` и выйдем `Ctrl+X`
+   сохраним файл `Ctrl+O` и выйдем `Ctrl+X`
    cоздадим загрузочный RAM диск
    `mkinitcpio -p linux`
 7. Запускаем скрипт Arch BTRFS UEFI Clear 2.1
