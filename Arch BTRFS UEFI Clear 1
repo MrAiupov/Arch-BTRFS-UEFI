@@ -34,7 +34,7 @@ echo '2.4 создание разделов'
  echo y;
 
  echo w;
-) | fdisk /dev/sda
+) | fdisk /dev/nvme0n1
 
 echo 'Ваша разметка диска'
 fdisk -l
@@ -43,7 +43,7 @@ echo '2.4.2 Форматирование дисков'
 mkfs.fat -F32 /dev/nvme0n1p1
 mkswap /dev/nvme0n1p2
 swapon /dev/nvme0n1p2
-mkfs.btrfs /dev/nvme0n1p3
+mkfs.btrfs /dev/nvme0n1p3 -L root
 
 echo '2.4.3 Монтирование дисков и создание томов и папок'
 mount /dev/nvme0n1p3 /mnt
