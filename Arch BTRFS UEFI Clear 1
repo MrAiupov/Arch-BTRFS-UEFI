@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# Arch Linux Fast Install - Быстрая установка Arch Linux https://github.com/ordanax/arch2018
+# Цель скрипта - быстрое развертывание системы с вашими персональными настройками (конфиг, темы, программы и т.д.).
+
+loadkeys ru
+setfont cyr-sun16
+
+echo '2.3 Синхронизация системных часов'
+timedatectl set-ntp true
+
+echo '2.4 создание разделов'
+(
+ echo g;
+
+ echo n;
+ echo;
+ echo;
+ echo +2G;
+ echo y;
+ echo t;
+ echo 1;
+
+ echo n;
+ echo;
+ echo;
+ echo +12G;
+ echo y;
+
+ echo n;
+ echo;
+ echo;
+ echo;
+ echo y;
+
+ echo w;
+) | fdisk /dev/sda
+
+echo 'Ваша разметка диска'
+fdisk -l
+
+echo '2.4.2 Форматирование дисков'
+mkfs.fat -F32 /dev/nvme0n1p1
+mkswap /dev/nvme0n1p2
+swapon /dev/nvme0n1p2
+mkfs.btrfs /dev/nvme0n1p3
+
+echo '2.4.3 Монтирование дисков и создание томов и папок'
+mount /dev/nvme0n1p3 /mnt
+btrfs su cr /mnt/@
+btrfs su cr /mnt/@home
+btrfs su cr /mnt/@var
+btrfs su cr /mnt/@opt
+btrfs su cr /mnt/@tmp
+umount /mnt
+mount -o noatime,commit=120,compress=zstd,space_cache,subvol=@ /dev/nvme0n1p3 /mnt
+mkdir /mnt/{boot,home,var,opt,tmp}
+mkdir /mnt/boot/efi
+mount -o noatime,commit=120,compress=zstd,space_cache,subvol=@home /dev/nvme0n1p3 /mnt/home
+mount -o noatime,commit=120,compress=zstd,space_cache,subvol=@opt /dev/nvme0n1p3 /mnt/opt
+mount -o noatime,commit=120,compress=zstd,space_cache,subvol=@tmp /dev/nvme0n1p3 /mnt/tmp
+mount -o subvol=@var /dev/nvme0n1p3 /mnt/var
+mount /dev/nvme0n1p1 /mnt/boot/efi
+
+echo '3.1 Выбор зеркал для загрузки. Ставим зеркала для России'
+echo "##" > /etc/pacman.d/mirrorlist
+echo "##Arch Linux repository mirrorlist" >> /etc/pacman.d/mirrorlist
+echo "##Generated on 2020-02-19" >> /etc/pacman.d/mirrorlist
+echo "##" >> /etc/pacman.d/mirrorlist
+echo "##Russia" >> /etc/pacman.d/mirrorlist
+echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
+echo "Server = https://mirror.yandex.ru/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
+echo "Server = http://mirror.truenetwork.ru/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
+echo "Server = http://mirror.rol.ru/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
+echo "Server = https://mirror.rol.ru/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
+echo "Server = http://archlinux.zepto.cloud/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
+
+echo '3.2 Установка основных пакетов'
+pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd netctl intel-ucode btrfs-progs
+
+echo '3.3 Настройка системы'
+genfstab -pU /mnt >> /mnt/etc/fstab
+
+arch-chroot /mnt sh -c "$(curl -fsSL git.io/JUG7c)"
