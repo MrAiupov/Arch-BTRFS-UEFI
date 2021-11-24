@@ -49,6 +49,9 @@ pacman -S wget git networkmanager network-manager-applet ppp --noconfirm
 echo 'Установка аудиодрайверов'
 pacman -S alsa-lib alsa-utils bluez --noconfirm
 
+echo 'Устанавливаем поддержку NTFS разметку'
+pacman -S ntfs-3g --noconfirm
+
 echo 'Подключаем автозагрузку менеджера входа и интернет'
 systemctl enable NetworkManager
 
