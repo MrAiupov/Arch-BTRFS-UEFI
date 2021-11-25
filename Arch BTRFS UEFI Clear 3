@@ -35,7 +35,7 @@ echo 'Установка Steam и Litris'
 pacman -S steam lutris --noconfirm
 
 echo 'Ставим дополнительные программы'
-pacman -S grub-customizer chromium firefox firefox-i18n-ru opera opera-ffmpeg-codecs vlc elisa gimp krita kdenlive libreoffice libreoffice-fresh-ru obs-studio audacity qbittorrent inkscape handbrake --noconfirm
+pacman -S grub-customizer chromium firefox firefox-i18n-ru opera opera-ffmpeg-codecs vlc elisa gimp krita kdenlive libreoffice libreoffice-fresh-ru obs-studio audacity qbittorrent inkscape handbrake youtube-dl --noconfirm
 
 echo 'Чистка кэша от всех обновлений и установочных файлов'
 pacman -Sc --noconfirm
