@@ -48,10 +48,13 @@
 9. Даём права sudo
 
    `sudo su`
-10. Запускаем скрипт Arch BTRFS UEFI Clear 3 установки Plasma и дополнительных программ и драйверов
-`wget git.io/JMfrV && sh JMfrV`
+10. Запускаем скрипт Arch BTRFS UEFI Clear 3 установки Plasma 
+и дополнительных программ и драйверов
+
+   `wget git.io/JMfrV && sh JMfrV`
    
 11. Перезагружаемся
-`sudo reboot`
+
+   `sudo reboot`
 
 Многие данные взяты со статьи https://www.nishantnadkarni.tech/posts/arch_installation/
