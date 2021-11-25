@@ -38,3 +38,4 @@
 12. Незабываем удалить скрипты из раздела `/` и раздела `/home`, через команду `sudo rm имя_скрипта`, если вы их запускали через `git.io`
 
 Многие данные взяты со статьи https://www.nishantnadkarni.tech/posts/arch_installation/
+и скрипта автоустановки Arch Linux https://github.com/ordanax/arch2018
